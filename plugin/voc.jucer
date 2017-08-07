@@ -65,10 +65,11 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" extraCompilerFlags="-Wunused-value">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Voc" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Voc" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
+                       osxCompatibility="10.9 SDK"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Voc"
                        headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
-                       osxArchitecture="64BitUniversal"/>
+                       osxArchitecture="64BitUniversal" osxCompatibility="10.9 SDK"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
