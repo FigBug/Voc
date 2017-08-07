@@ -66,7 +66,7 @@ struct glottis_state
 	float omega;
 };
 
-static float min(float a, float b)
+static float vmin(float a, float b)
 {
 	if (a < b) {
 		return a;
@@ -74,7 +74,7 @@ static float min(float a, float b)
 	return b;
 }
 
-static float max(float a, float b)
+static float vmax(float a, float b)
 {
 	if (a < b) {
 		return b;
@@ -84,7 +84,7 @@ static float max(float a, float b)
 
 static float clamp(float n, float minimum, float maximum)
 {
-	return min(max(n, minimum), maximum);
+	return vmin(vmax(n, minimum), maximum);
 }
 
 static float normalized_lf_waveform(struct glottis_state *g, float t)
@@ -244,10 +244,10 @@ void glottis_finish_block(struct glottis_state *g, int auto_wobble, int always_v
 	}
 	
 	if (g->target_frequency > g->smooth_frequency) {
-		g->smooth_frequency = min(g->smooth_frequency * 1.1f, g->target_frequency);
+		g->smooth_frequency = vmin(g->smooth_frequency * 1.1f, g->target_frequency);
 	}
 	if (g->target_frequency < g->smooth_frequency) {
-		g->smooth_frequency = max(g->smooth_frequency / 1.1f, g->target_frequency);
+		g->smooth_frequency = vmax(g->smooth_frequency / 1.1f, g->target_frequency);
 	}
 	
 	g->old_frequency = g->new_frequency;

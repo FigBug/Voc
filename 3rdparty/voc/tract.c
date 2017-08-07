@@ -97,7 +97,7 @@ struct tract_state
 	float smoothing;
 };
 
-static float min(float a, float b)
+static float vmin(float a, float b)
 {
 	if (a < b) {
 		return a;
@@ -105,7 +105,7 @@ static float min(float a, float b)
 	return b;
 }
 
-static float max(float a, float b)
+static float vmax(float a, float b)
 {
 	if (a < b) {
 		return b;
@@ -117,9 +117,9 @@ static float move_towards_bi(float current, float target, float amount_up, float
 {
 	
 	if (current < target) {
-		return min(current + amount_up, target);
+		return vmin(current + amount_up, target);
 	}
-	return max(current - amount_down, target); 
+	return vmax(current - amount_down, target); 
 }
 
 static void calculate_reflections(struct tract_state *t)
@@ -213,7 +213,7 @@ struct tract_state *tract_init(unsigned long sample_rate)
 		else {
 			diameter = 0.5f + 1.5f * (2.0f - d);
 		}
-		diameter = min(diameter, 1.9f);
+		diameter = vmin(diameter, 1.9f);
 		t->nose_diameter[i] = diameter;
 		
 		t->nose_R[i] = 0.0f;
