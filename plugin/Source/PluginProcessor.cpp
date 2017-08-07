@@ -10,6 +10,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include <time.h>
 
 const char* VocAudioProcessor::paramTenseness               = "tenseness";
 const char* VocAudioProcessor::paramConstrictionPosition    = "constrictionP";
@@ -45,12 +46,12 @@ VocAudioProcessor::~VocAudioProcessor()
 }
 
 //==============================================================================
-void VocAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void VocAudioProcessor::prepareToPlay (double sampleRate, int)
 {
     if (voc != nullptr)
         voc_shutdown (voc);
     
-    voc = voc_init (sampleRate, time (NULL));
+    voc = voc_init ((unsigned long) sampleRate, (unsigned int) time (NULL));
     
     outputSmoothed.reset (sampleRate, 0.05);
     
