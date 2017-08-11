@@ -207,7 +207,7 @@ void glottis_set_target_tenseness(struct glottis_state *g, float t)
 
 static float get_noise_modulator(const struct glottis_state *g)
 {
-	float voiced = 0.1 + 0.2 * max(0.0f, sin(PI * 2.0f * g->time_in_waveform / g->waveform_length));
+	float voiced = 0.1 + 0.2 * vmax(0.0f, sin(PI * 2.0f * g->time_in_waveform / g->waveform_length));
 	return g->target_tenseness * g->intensity * voiced + (1.0f - g->target_tenseness * g->intensity) * 0.3f;
 }
 

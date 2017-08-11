@@ -43,3 +43,5 @@ Release64
 *.xcuserstate
 *.xcscheme
 *.a
+*.xcscmblueprint
+
