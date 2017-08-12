@@ -16,6 +16,8 @@
 VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
     : slAudioProcessorEditor (p), processor (p)
 {
+    additionalProgramming = "Neil Thapen";
+    
     logo = ImageFileFormat::loadFrom (BinaryData::logo_png, BinaryData::logo_pngSize);
     
     for (slParameter* pp : p.getPluginParameters())
@@ -42,11 +44,7 @@ VocAudioProcessorEditor::~VocAudioProcessorEditor()
 void VocAudioProcessorEditor::paint (Graphics& g)
 {
     slAudioProcessorEditor::paint (g);
-    
-    g.setFont (Font (15.0f));
-    g.setColour (Colours::white);
-    g.drawText("Ver: " JucePlugin_VersionString, getLocalBounds().reduced (4), Justification::topRight);
-    
+        
     g.drawImageAt (logo, getWidth() / 2 - logo.getWidth() / 2, 0);
 }
 
