@@ -19,14 +19,14 @@ const char* VocAudioProcessor::paramSmoothing               = "smoothing";
 const char* VocAudioProcessor::paramOutput                  = "output";
 
 //==============================================================================
-String percentTextFunction (const slParameter& p)
+String percentTextFunction (const slParameter& p, float v)
 {
-    return String::formatted("%.0f%%", p.getUserValue() * 100);
+    return String::formatted("%.0f%%", v / p.getUserRangeEnd() * 100);
 }
 
-String onOffTextFunction (const slParameter& p)
+String onOffTextFunction (const slParameter& p, float v)
 {
-    return p.getUserValue() > 0.0f ? "On" : "Off";
+    return v > 0.0f ? "On" : "Off";
 }
 
 //==============================================================================
@@ -111,7 +111,7 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
             noteQueue.clear();
         }
         
-        const int curNote = noteQueue.size() > 0 ? noteQueue.getFirst() : -1;
+        const int curNote = noteQueue.size() > 0 ? noteQueue.getLast() : -1;
         
         if (curNote != lastNote)
         {
