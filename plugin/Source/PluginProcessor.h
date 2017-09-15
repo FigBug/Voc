@@ -47,6 +47,12 @@ public:
     static const char* paramSmoothing;
     static const char* paramOutput;
 
+    void setEditor (VocAudioProcessorEditor* editor_)
+    {
+        ScopedLock sl (editorLock);
+        editor = editor_;
+    }
+
 private:
     void runUntil (int& done, AudioSampleBuffer& buffer, int pos);
     
@@ -56,7 +62,8 @@ private:
     Array<int> noteQueue;
     
     LinearSmoothedValue<float> outputSmoothed;
-    Component::SafePointer<VocAudioProcessorEditor> editor;
+    CriticalSection editorLock;
+    VocAudioProcessorEditor* editor = nullptr;
     
     voc_state* voc = nullptr;
     

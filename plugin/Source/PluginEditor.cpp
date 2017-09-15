@@ -34,10 +34,13 @@ VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
     
     scope.setNumSamplesPerPixel (2);
     scope.setVerticalZoomFactor (3.0f);
+
+    p.setEditor (this);
 }
 
 VocAudioProcessorEditor::~VocAudioProcessorEditor()
 {
+    processor.setEditor (nullptr);
 }
 
 //==============================================================================

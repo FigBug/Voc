@@ -24,7 +24,7 @@ String percentTextFunction (const slParameter& p, float v)
     return String::formatted("%.0f%%", v / p.getUserRangeEnd() * 100);
 }
 
-String onOffTextFunction (const slParameter& p, float v)
+String onOffTextFunction (const slParameter&, float v)
 {
     return v > 0.0f ? "On" : "Off";
 }
@@ -130,6 +130,7 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
     for (int i = 0; i < buffer.getNumSamples(); i++)
         data[i] *= outputSmoothed.getNextValue();
     
+    ScopedLock sl (editorLock);
      if (editor)
          editor->scope.addSamples (data, buffer.getNumSamples());
 }
