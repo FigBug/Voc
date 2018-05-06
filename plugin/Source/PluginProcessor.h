@@ -8,11 +8,9 @@
   ==============================================================================
 */
 
-#ifndef PLUGINPROCESSOR_H_INCLUDED
-#define PLUGINPROCESSOR_H_INCLUDED
+#pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "slCommon.h"
 
 extern "C" {
 #include "voc.h"
@@ -22,7 +20,7 @@ extern "C" {
 /**
 */
 class VocAudioProcessorEditor;
-class VocAudioProcessor : public slProcessor
+class VocAudioProcessor : public gin::GinProcessor
 {
 public:
     //==============================================================================
@@ -70,6 +68,3 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VocAudioProcessor)
 };
-
-
-#endif  // PLUGINPROCESSOR_H_INCLUDED

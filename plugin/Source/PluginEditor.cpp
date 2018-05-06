@@ -12,15 +12,17 @@
 #include "PluginEditor.h"
 #include "BinaryData.h"
 
+using namespace gin;
+
 //==============================================================================
 VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
-    : slAudioProcessorEditor (p), processor (p)
+    : GinAudioProcessorEditor (p), processor (p)
 {
     additionalProgramming = "Neil Thapen";
     
     logo = ImageFileFormat::loadFrom (BinaryData::logo_png, BinaryData::logo_pngSize);
     
-    for (slParameter* pp : p.getPluginParameters())
+    for (Parameter* pp : p.getPluginParameters())
     {
         ParamComponent* c = pp->isOnOff() ? (ParamComponent*)new Switch (pp) : (ParamComponent*)new Knob (pp);
         
@@ -46,7 +48,7 @@ VocAudioProcessorEditor::~VocAudioProcessorEditor()
 //==============================================================================
 void VocAudioProcessorEditor::paint (Graphics& g)
 {
-    slAudioProcessorEditor::paint (g);
+    GinAudioProcessorEditor::paint (g);
         
     g.drawImageAt (logo, getWidth() / 2 - logo.getWidth() / 2, 0);
 }
@@ -55,7 +57,7 @@ void VocAudioProcessorEditor::resized()
 {
     using AP = VocAudioProcessor;
     
-    slAudioProcessorEditor::resized();
+    GinAudioProcessorEditor::resized();
     
     Rectangle<int> r = getControlsArea();
     

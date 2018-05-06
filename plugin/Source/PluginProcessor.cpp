@@ -12,6 +12,8 @@
 #include "PluginEditor.h"
 #include <time.h>
 
+using namespace gin;
+
 const char* VocAudioProcessor::paramTenseness               = "tenseness";
 const char* VocAudioProcessor::paramConstrictionPosition    = "constrictionP";
 const char* VocAudioProcessor::paramConstrictionAmount      = "constrictionA";
@@ -19,12 +21,12 @@ const char* VocAudioProcessor::paramSmoothing               = "smoothing";
 const char* VocAudioProcessor::paramOutput                  = "output";
 
 //==============================================================================
-String percentTextFunction (const slParameter& p, float v)
+String percentTextFunction (const Parameter& p, float v)
 {
     return String::formatted("%.0f%%", v / p.getUserRangeEnd() * 100);
 }
 
-String onOffTextFunction (const slParameter&, float v)
+String onOffTextFunction (const Parameter&, float v)
 {
     return v > 0.0f ? "On" : "Off";
 }
@@ -32,11 +34,11 @@ String onOffTextFunction (const slParameter&, float v)
 //==============================================================================
 VocAudioProcessor::VocAudioProcessor()
 {
-    addPluginParameter (new slParameter (paramTenseness,            "Tenseness",             "Tenseness",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new slParameter (paramConstrictionPosition, "Constriction Position", "Const Pos" ,   "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new slParameter (paramConstrictionAmount,   "Constriction Amount",   "Const Amt",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new slParameter (paramSmoothing,            "Smoothing",             "Smoothing",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new slParameter (paramOutput,               "Output",                "Output",       "", 0.0f, 1.0f,  0.0f, 1.0f, 1.0f, percentTextFunction));
+    addPluginParameter (new Parameter (paramTenseness,            "Tenseness",             "Tenseness",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
+    addPluginParameter (new Parameter (paramConstrictionPosition, "Constriction Position", "Const Pos" ,   "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
+    addPluginParameter (new Parameter (paramConstrictionAmount,   "Constriction Amount",   "Const Amt",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
+    addPluginParameter (new Parameter (paramSmoothing,            "Smoothing",             "Smoothing",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
+    addPluginParameter (new Parameter (paramOutput,               "Output",                "Output",       "", 0.0f, 1.0f,  0.0f, 1.0f, 1.0f, percentTextFunction));
 }
 
 VocAudioProcessor::~VocAudioProcessor()
