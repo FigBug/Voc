@@ -70,7 +70,7 @@
         <MODULEPATH id="gin" path="../modules/gin/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2015 targetFolder="Builds/VisualStudio2015">
+    <VS2017 targetFolder="Builds/VisualStudio2017" toolset="v141_xp">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="Voc_32b" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
@@ -110,7 +110,7 @@
         <MODULEPATH id="juce_audio_utils" path="../modules/juce/modules"/>
         <MODULEPATH id="gin" path="../modules/gin/modules"/>
       </MODULEPATHS>
-    </VS2015>
+    </VS2017>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="dRowAudio" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
