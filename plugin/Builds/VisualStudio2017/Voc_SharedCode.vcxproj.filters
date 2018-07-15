@@ -742,6 +742,9 @@
     <ClCompile Include="..\..\..\modules\gin\modules\gin\components\singlelinetexteditor.cpp">
       <Filter>JUCE Modules\gin\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\modules\gin\modules\gin\dsp\adsr.cpp">
+      <Filter>JUCE Modules\gin\dsp</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\modules\gin\modules\gin\dsp\audioutil.cpp">
       <Filter>JUCE Modules\gin\dsp</Filter>
     </ClCompile>
@@ -3122,6 +3125,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\modules\gin\modules\gin\components\singlelinetexteditor.h">
       <Filter>JUCE Modules\gin\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\modules\gin\modules\gin\dsp\adsr.h">
+      <Filter>JUCE Modules\gin\dsp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\modules\gin\modules\gin\dsp\audioutil.h">
       <Filter>JUCE Modules\gin\dsp</Filter>

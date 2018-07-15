@@ -32,6 +32,11 @@ String percentTextFunction (const Parameter& p, float v)
     return String::formatted("%.0f%%", v / p.getUserRangeEnd() * 100);
 }
 
+String glideTextFunction (const Parameter& p, float v)
+{
+    return String::formatted("%.2f", v);
+}
+
 String onOffTextFunction (const Parameter&, float v)
 {
     return v > 0.0f ? "On" : "Off";
@@ -44,7 +49,7 @@ VocAudioProcessor::VocAudioProcessor()
     addPluginParameter (new Parameter (paramConstrictionPosition, "Constriction Position", "Const Pos" ,   "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
     addPluginParameter (new Parameter (paramConstrictionAmount,   "Constriction Amount",   "Const Amt",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
     addPluginParameter (new Parameter (paramSmoothing,            "Smoothing",             "Smoothing",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new Parameter (paramGlide,                "Output",                "Glide",       "s", 0.0f, 1.0f,  0.0f, 1.0f, 1.0f));
+    addPluginParameter (new Parameter (paramGlide,                "Glide",                 "Glide",       "s", 0.0f, 0.5f,  0.0f, 1.0f, 1.0f, glideTextFunction));
     addPluginParameter (new Parameter (paramOutput,               "Output",                "Output",       "", 0.0f, 1.0f,  0.0f, 1.0f, 1.0f, percentTextFunction));
 
     addPluginParameter (new Parameter (paramAttack,               "Attack",                "A",       "s",     0.0f, 10.0f, 0.0f, 0.01f, 0.4f));
@@ -72,6 +77,9 @@ void VocAudioProcessor::prepareToPlay (double sr, int)
     outputSmoothed.reset (sampleRate, 0.05);
     
     adsr.setSampleRate (sampleRate);
+    
+    noteSmoothed.reset (sampleRate, parameterValue (paramGlide));
+    lastGlide = parameterValue (paramGlide);
 }
 
 void VocAudioProcessor::releaseResources()
@@ -89,13 +97,17 @@ void VocAudioProcessor::runUntil (int& done, AudioSampleBuffer& buffer, int pos)
             data[i] = voc_f (voc, 0) * adsr.process();
         
         done += todo;
-        noteSmoothed.process (todo);
+        noteSmoothed.skip (todo);
     }
 }
 
 void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midi)
 {
-    noteSmoothed.reset (sampleRate, parameterValue (paramGlide));
+    if (parameterValue (paramGlide) != lastGlide)
+    {
+        lastGlide = parameterValue (paramGlide);
+        noteSmoothed.reset (sampleRate, parameterValue (paramGlide));
+    }
     
     adsr.setAttack (parameterValue (paramAttack));
     adsr.setDecay (parameterValue (paramDecay));
@@ -109,6 +121,10 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
     
     outputSmoothed.setValue (getParameter (paramOutput)->getUserValue());
 
+    const int playingNote = noteQueue.size() > 0 ? noteQueue.getLast() : -1;
+    if (playingNote != -1)
+        voc_note_on (voc, jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
+    
     int done = 0;
     runUntil (done, buffer, 0);
     
@@ -145,20 +161,16 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
             else
             {
                 if (lastNote == -1)
-                    noteSmoothed.setValueUnsmoothed (curNote / 127.0f);
+                    noteSmoothed.setValue (curNote / 127.0f, true);
                 else
                     noteSmoothed.setValue (curNote / 127.0f);
                 
-                voc_note_on (voc, jlimit (0.0f, 127.0f, curNote + bend), velocity);
+                voc_note_on (voc, jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
                 if (lastNote == -1)
                     adsr.noteOn();
             }
             
             lastNote = curNote;
-        }
-        else if (curNote != -1)
-        {
-            voc_note_on (voc, jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
         }
         
         if (msg.isPitchWheel())

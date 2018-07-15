@@ -63,11 +63,12 @@ private:
     int lastNote = -1;
     int velocity = 0;
     float bend = 0;
+    float lastGlide = 0;
     double sampleRate = 44100.0;
     Array<int> noteQueue;
     
     LinearSmoothedValue<float> outputSmoothed;
-    gin::ValueSmoother<float> noteSmoothed;
+    LinearSmoothedValue<float> noteSmoothed;
     
     CriticalSection editorLock;
     VocAudioProcessorEditor* editor = nullptr;
