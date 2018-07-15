@@ -110,17 +110,13 @@ void voc_smoothing_set(struct voc_state *voc, float amount)
 	tract_set_smoothing(voc->tract, amount);
 }
 
-static
-float
-note_to_freq
-	(int note
-	)
+static float note_to_freq (float note)
 {
 	return pow(2.0, (note - 69) / 12.0) * 440.0f;
 }
 
 
-void voc_note_on(struct voc_state *v, int note, int velocity)
+void voc_note_on(struct voc_state *v, float note, int velocity)
 {
 	v->always_voice = 1;
 	glottis_set_target_frequency(v->glottis, note_to_freq(note));

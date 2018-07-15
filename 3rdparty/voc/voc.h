@@ -30,7 +30,7 @@ struct voc_state;
 struct voc_state *voc_init(unsigned long sample_rate, unsigned seed);
 void voc_shutdown(struct voc_state *v);
 
-void voc_note_on(struct voc_state *v, int note, int velocity);
+void voc_note_on(struct voc_state *v, float note, int velocity);
 void voc_note_off(struct voc_state *v, int velocity);
 
 float voc_f(struct voc_state *voc, float pm);

@@ -43,7 +43,13 @@ public:
     static const char* paramConstrictionPosition;
     static const char* paramConstrictionAmount;
     static const char* paramSmoothing;
+    static const char* paramGlide;
     static const char* paramOutput;
+
+    static const char* paramAttack;
+    static const char* paramDecay;
+    static const char* paramSustain;
+    static const char* paramRelease;
 
     void setEditor (VocAudioProcessorEditor* editor_)
     {
@@ -56,14 +62,19 @@ private:
     
     int lastNote = -1;
     int velocity = 0;
-    float last = 0;
+    float bend = 0;
+    double sampleRate = 44100.0;
     Array<int> noteQueue;
     
     LinearSmoothedValue<float> outputSmoothed;
+    gin::ValueSmoother<float> noteSmoothed;
+    
     CriticalSection editorLock;
     VocAudioProcessorEditor* editor = nullptr;
     
     voc_state* voc = nullptr;
+    
+    gin::ADSR adsr;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VocAudioProcessor)
