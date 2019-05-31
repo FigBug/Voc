@@ -119,7 +119,7 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
     voc_tenseness_set (voc, getParameter (paramTenseness)->getUserValue());
     voc_smoothing_set (voc, getParameter (paramSmoothing)->getUserValue());
     
-    outputSmoothed.setValue (getParameter (paramOutput)->getUserValue());
+    outputSmoothed.setTargetValue (getParameter (paramOutput)->getUserValue());
 
     const int playingNote = noteQueue.size() > 0 ? noteQueue.getLast() : -1;
     if (playingNote != -1)
@@ -161,9 +161,9 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
             else
             {
                 if (lastNote == -1)
-                    noteSmoothed.setValue (curNote / 127.0f, true);
+                    noteSmoothed.setCurrentAndTargetValue (curNote / 127.0f);
                 else
-                    noteSmoothed.setValue (curNote / 127.0f);
+                    noteSmoothed.setTargetValue (curNote / 127.0f);
                 
                 voc_note_on (voc, jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
                 if (lastNote == -1)

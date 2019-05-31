@@ -59,8 +59,6 @@ void VocAudioProcessorEditor::resized()
     
     GinAudioProcessorEditor::resized();
     
-    Rectangle<int> r = getControlsArea();
-    
     componentForId (AP::paramTenseness)->setBounds (getGridArea (0, 0));
     componentForId (AP::paramSmoothing)->setBounds (getGridArea (1, 0));
     componentForId (AP::paramConstrictionPosition)->setBounds (getGridArea (2, 0));
