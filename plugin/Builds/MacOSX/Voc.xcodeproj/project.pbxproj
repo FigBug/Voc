@@ -1082,7 +1082,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
@@ -1140,7 +1140,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
@@ -1197,7 +1197,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
@@ -1256,7 +1256,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
@@ -1311,7 +1311,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
@@ -1363,7 +1363,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
@@ -1415,7 +1415,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
@@ -1467,7 +1467,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"../../../modules/juce/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/rrabien/SDKs/vstsdk2.4",
+					"../../../modules/plugin_sdk/vstsdk2.4",
 					"../../JuceLibraryCode",
 					"../../../modules/drowaudio/module",
 					"../../../modules/gin/modules",
