@@ -46,11 +46,11 @@
                vstLegacyFolder="../modules/plugin_sdk/vstsdk2.4">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Voc" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
-                       osxCompatibility="10.9 SDK" enablePluginBinaryCopyStep="1"/>
+                       osxCompatibility="10.9 SDK" enablePluginBinaryCopyStep="1" recommendedWarnings="LLVM"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Voc"
                        headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
                        osxArchitecture="64BitUniversal" osxCompatibility="10.9 SDK"
-                       enablePluginBinaryCopyStep="1"/>
+                       enablePluginBinaryCopyStep="1" recommendedWarnings="LLVM"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../modules/juce/modules"/>
