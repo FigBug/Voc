@@ -31,20 +31,20 @@
 *.out
 *.app
 
+*.xcuserstate
 Debug
 Release
 Debug64
 Release64
 
-*.suo
-*.db
 *.opendb
-
-*.xcuserstate
-*.xcscheme
-*.a
-*.xcscmblueprint
+*.db
+*.suo
 
 plugin/Builds/VisualStudio2017/x64
 plugin/Builds/VisualStudio2017/Win32
 plugin/Builds/VisualStudio2017/.vs
+
+xcuserdata
+Builds
+JuceLibraryCode
