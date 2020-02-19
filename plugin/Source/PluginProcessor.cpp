@@ -32,7 +32,7 @@ String percentTextFunction (const Parameter& p, float v)
     return String::formatted("%.0f%%", v / p.getUserRangeEnd() * 100);
 }
 
-String glideTextFunction (const Parameter& p, float v)
+String glideTextFunction (const Parameter&, float v)
 {
     return String::formatted("%.2f", v);
 }
@@ -45,17 +45,16 @@ String onOffTextFunction (const Parameter&, float v)
 //==============================================================================
 VocAudioProcessor::VocAudioProcessor()
 {
-    addPluginParameter (new Parameter (paramTenseness,            "Tenseness",             "Tenseness",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new Parameter (paramConstrictionPosition, "Constriction Position", "Const Pos" ,   "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new Parameter (paramConstrictionAmount,   "Constriction Amount",   "Const Amt",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new Parameter (paramSmoothing,            "Smoothing",             "Smoothing",    "", 0.0f, 1.0f,  0.0f, 0.0f, 1.0f, percentTextFunction));
-    addPluginParameter (new Parameter (paramGlide,                "Glide",                 "Glide",       "s", 0.0f, 0.5f,  0.0f, 1.0f, 1.0f, glideTextFunction));
-    addPluginParameter (new Parameter (paramOutput,               "Output",                "Output",       "", 0.0f, 1.0f,  0.0f, 1.0f, 1.0f, percentTextFunction));
-
-    addPluginParameter (new Parameter (paramAttack,               "Attack",                "A",       "s",     0.0f, 10.0f, 0.0f, 0.01f, 0.4f));
-    addPluginParameter (new Parameter (paramDecay,                "Decay",                 "D",       "s",     0.0f, 10.0f, 0.0f, 0.01f, 0.4f));
-    addPluginParameter (new Parameter (paramSustain,              "Sustain",               "S",       "%",     0.0f, 1.0f,  0.0f, 1.0f, 1.0f));
-    addPluginParameter (new Parameter (paramRelease,              "Release",               "R",       "s",     0.0f, 10.0f, 0.0f, 0.01f, 0.4f));
+    addExtParam (paramTenseness,            "Tenseness",             "Tenseness",   "", {0.0f,  1.0f, 0.0f, 1.0f},  0.0f, 0.0f, percentTextFunction);
+    addExtParam (paramConstrictionPosition, "Constriction Position", "Const Pos" ,  "", {0.0f,  1.0f, 0.0f, 1.0f},  0.0f, 0.0f, percentTextFunction);
+    addExtParam (paramConstrictionAmount,   "Constriction Amount",   "Const Amt",   "", {0.0f,  1.0f, 0.0f, 1.0f},  0.0f, 0.0f, percentTextFunction);
+    addExtParam (paramSmoothing,            "Smoothing",             "Smoothing",   "", {0.0f,  1.0f, 0.0f, 1.0f},  0.0f, 0.0f, percentTextFunction);
+    addExtParam (paramGlide,                "Glide",                 "Glide",      "s", {0.0f,  0.5f, 0.0f, 1.0f},  1.0f, 0.0f, glideTextFunction);
+    addExtParam (paramOutput,               "Output",                "Output",      "", {0.0f,  1.0f, 0.0f, 1.0f},  1.0f, 0.0f, percentTextFunction);
+    addExtParam (paramAttack,               "Attack",                "A",          "s", {0.0f, 10.0f, 0.0f, 0.4f}, 0.01f, 0.0f);
+    addExtParam (paramDecay,                "Decay",                 "D",          "s", {0.0f, 10.0f, 0.0f, 0.4f}, 0.01f, 0.0f);
+    addExtParam (paramSustain,              "Sustain",               "S",          "%", {0.0f,  1.0f, 0.0f, 1.0f},  1.0f, 0.0f);
+    addExtParam (paramRelease,              "Release",               "R",          "s", {0.0f, 10.0f, 0.0f, 0.4f}, 0.01f, 0.0f);
 }
 
 VocAudioProcessor::~VocAudioProcessor()
@@ -72,7 +71,7 @@ void VocAudioProcessor::prepareToPlay (double sr, int)
     if (voc != nullptr)
         voc_shutdown (voc);
     
-    voc = voc_init ((unsigned long) sampleRate, (unsigned int) time (NULL));
+    voc = voc_init ((unsigned long) sampleRate, (unsigned int) time (nullptr));
     
     outputSmoothed.reset (sampleRate, 0.05);
     
@@ -92,7 +91,7 @@ void VocAudioProcessor::runUntil (int& done, AudioSampleBuffer& buffer, int pos)
     
     if (todo > 0)
     {
-        float* data = buffer.getWritePointer (0, done);
+        auto data = buffer.getWritePointer (0, done);
         for (int i = 0; i < todo; i++)
             data[i] = voc_f (voc, 0) * adsr.process();
         
@@ -183,16 +182,16 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
         if (curNote == -1 && adsr.getOutput() == 0.0f)
             voc_note_off (voc, velocity);
     }
+
+    int numSamples = buffer.getNumSamples();
+    runUntil (done, buffer, numSamples);
     
-    runUntil (done, buffer, buffer.getNumSamples());
-    
-    float* data = buffer.getWritePointer (0);
-    for (int i = 0; i < buffer.getNumSamples(); i++)
+    auto data = buffer.getWritePointer (0);
+    for (int i = 0; i < numSamples; i++)
         data[i] *= outputSmoothed.getNextValue();
     
-    ScopedLock sl (editorLock);
-     if (editor)
-         editor->scope.addSamples (data, buffer.getNumSamples());
+    if (fifo.getFreeSpace() >= numSamples)
+        fifo.writeMono (data, numSamples);
 }
 
 //==============================================================================
@@ -203,8 +202,7 @@ bool VocAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* VocAudioProcessor::createEditor()
 {
-    editor = new VocAudioProcessorEditor (*this);
-    return editor;
+    return new VocAudioProcessorEditor (*this);
 }
 
 //==============================================================================

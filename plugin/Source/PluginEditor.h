@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 #include "PluginProcessor.h"
 
 //==============================================================================
@@ -20,15 +20,15 @@ class VocAudioProcessorEditor  : public gin::GinAudioProcessorEditor
 {
 public:
     VocAudioProcessorEditor (VocAudioProcessor&);
-    ~VocAudioProcessorEditor();
+    ~VocAudioProcessorEditor() override;
 
     //==============================================================================
     void resized() override;
     void paint (Graphics& g) override;
 
-    VocAudioProcessor& processor;
+    VocAudioProcessor& proc;
     
-    drow::TriggeredScope scope;
+    gin::TriggeredScope scope {proc.fifo};
     Image logo;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VocAudioProcessorEditor)

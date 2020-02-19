@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 
 extern "C" {
 #include "voc.h"
@@ -25,7 +25,7 @@ class VocAudioProcessor : public gin::GinProcessor
 public:
     //==============================================================================
     VocAudioProcessor();
-    ~VocAudioProcessor();
+    ~VocAudioProcessor() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -50,12 +50,8 @@ public:
     static const char* paramDecay;
     static const char* paramSustain;
     static const char* paramRelease;
-
-    void setEditor (VocAudioProcessorEditor* editor_)
-    {
-        ScopedLock sl (editorLock);
-        editor = editor_;
-    }
+    
+    gin::AudioFifo fifo {1,44100};
 
 private:
     void runUntil (int& done, AudioSampleBuffer& buffer, int pos);

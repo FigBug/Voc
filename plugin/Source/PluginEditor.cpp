@@ -16,15 +16,15 @@ using namespace gin;
 
 //==============================================================================
 VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
-    : GinAudioProcessorEditor (p), processor (p)
+    : GinAudioProcessorEditor (p), proc (p)
 {
     additionalProgramming = "Neil Thapen";
     
     logo = ImageFileFormat::loadFrom (BinaryData::logo_png, BinaryData::logo_pngSize);
     
-    for (Parameter* pp : p.getPluginParameters())
+    for (auto pp : p.getPluginParameters())
     {
-        ParamComponent* c = pp->isOnOff() ? (ParamComponent*)new Switch (pp) : (ParamComponent*)new Knob (pp);
+        auto c = pp->isOnOff() ? (ParamComponent*)new Switch (pp) : (ParamComponent*)new Knob (pp);
         
         addAndMakeVisible (c);
         controls.add (c);
@@ -36,13 +36,10 @@ VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
     
     scope.setNumSamplesPerPixel (2);
     scope.setVerticalZoomFactor (3.0f);
-
-    p.setEditor (this);
 }
 
 VocAudioProcessorEditor::~VocAudioProcessorEditor()
 {
-    processor.setEditor (nullptr);
 }
 
 //==============================================================================
