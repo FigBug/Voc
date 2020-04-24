@@ -46,12 +46,12 @@
                vstLegacyFolder="../modules/plugin_sdk/vstsdk2.4" hardenedRuntime="1"
                extraDefs="JUCE_COREGRAPHICS_DRAW_ASYNC=1">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Voc" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Voc" headerPath="../../../3rdparty/voc&#10;"
                        osxCompatibility="10.9 SDK" enablePluginBinaryCopyStep="1" recommendedWarnings="LLVM"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Voc"
-                       headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
-                       osxArchitecture="64BitIntel" osxCompatibility="10.9 SDK" enablePluginBinaryCopyStep="1"
-                       recommendedWarnings="LLVM" linkTimeOptimisation="0"/>
+                       headerPath="../../../3rdparty/voc&#10;" osxArchitecture="64BitIntel"
+                       osxCompatibility="10.9 SDK" enablePluginBinaryCopyStep="1" recommendedWarnings="LLVM"
+                       linkTimeOptimisation="0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../modules/juce/modules"/>
@@ -78,22 +78,22 @@
     <VS2019 targetFolder="Builds/VisualStudio2019" toolset="v142" vstLegacyFolder="../modules/plugin_sdk/vstsdk2.4">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="Win32"
-                       isDebug="1" optimisation="1" targetName="Voc_32b" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
+                       isDebug="1" optimisation="1" targetName="Voc_32b" headerPath="../../../3rdparty/voc&#10;"
                        postbuildCommand="copy /Y &quot;$(OutDir)\$(TargetFileName)&quot; &quot;C:\Program Files (x86)\VSTPlugins&quot;"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
                        useRuntimeLibDLL="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="Win32"
-                       isDebug="0" optimisation="3" targetName="Voc_32b" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
+                       isDebug="0" optimisation="3" targetName="Voc_32b" headerPath="../../../3rdparty/voc&#10;"
                        postbuildCommand="copy /Y &quot;$(OutDir)\$(TargetFileName)&quot; &quot;C:\Program Files (x86)\VSTPlugins&quot;"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
                        linkTimeOptimisation="0" useRuntimeLibDLL="0"/>
         <CONFIGURATION name="Debug64" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="Voc_64b" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
+                       isDebug="1" optimisation="1" targetName="Voc_64b" headerPath="../../../3rdparty/voc&#10;"
                        postbuildCommand="copy /Y &quot;$(OutDir)\$(TargetFileName)&quot; &quot;C:\Program Files\VSTPlugins&quot;"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
                        useRuntimeLibDLL="0"/>
         <CONFIGURATION name="Release64" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Voc_64b" headerPath="../../../3rdparty/voc&#10;../../../modules/slCommon"
+                       isDebug="0" optimisation="3" targetName="Voc_64b" headerPath="../../../3rdparty/voc&#10;"
                        postbuildCommand="copy /Y &quot;$(OutDir)\$(TargetFileName)&quot; &quot;C:\Program Files\VSTPlugins&quot;"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
                        linkTimeOptimisation="0" useRuntimeLibDLL="0"/>
@@ -124,8 +124,8 @@
                 extraLinkerFlags="-fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-O1 -Wl,--as-needed -Wl,--strip-all"
                 extraCompilerFlags="-fvisibility=hidden">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" libraryPath="/usr/X11R6/lib/"/>
-        <CONFIGURATION isDebug="0" name="Release" libraryPath="/usr/X11R6/lib/"/>
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="/usr/X11R6/lib/" headerPath="../../../3rdparty/voc&#10;"/>
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="/usr/X11R6/lib/" headerPath="../../../3rdparty/voc&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_opengl" path="../modules/juce/modules"/>
