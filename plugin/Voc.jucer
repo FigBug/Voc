@@ -121,12 +121,11 @@
       </MODULEPATHS>
     </VS2019>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" vstLegacyFolder="../modules/plugin_sdk/vstsdk2.4"
-                extraDefs="-fvisibility=hidden" extraLinkerFlags="-fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-O1 -Wl,--as-needed -Wl,--strip-all">
+                extraLinkerFlags="-fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-O1 -Wl,--as-needed -Wl,--strip-all"
+                extraCompilerFlags="-fvisibility=hidden">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../../3rdparty/Nes_Snd_Emu-0.1.7&#10;../../../modules/slCommon"
-                       defines="/usr/X11R6/lib/"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../../3rdparty/Nes_Snd_Emu-0.1.7&#10;../../../modules/slCommon"
-                       libraryPath="/usr/X11R6/lib/"/>
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="/usr/X11R6/lib/"/>
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="/usr/X11R6/lib/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_opengl" path="../modules/juce/modules"/>
