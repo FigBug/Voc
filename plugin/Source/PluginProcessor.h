@@ -20,7 +20,7 @@ extern "C" {
 /**
 */
 class VocAudioProcessorEditor;
-class VocAudioProcessor : public gin::GinProcessor
+class VocAudioProcessor : public gin::Processor
 {
 public:
     //==============================================================================

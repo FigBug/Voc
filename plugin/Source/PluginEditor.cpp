@@ -16,11 +16,9 @@ using namespace gin;
 
 //==============================================================================
 VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
-    : GinAudioProcessorEditor (p), proc (p)
+    : gin::ProcessorEditor (p), proc (p)
 {
     additionalProgramming = "Neil Thapen";
-    
-    logo = ImageFileFormat::loadFrom (BinaryData::logo_png, BinaryData::logo_pngSize);
     
     for (auto pp : p.getPluginParameters())
     {
@@ -36,6 +34,11 @@ VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
     
     scope.setNumSamplesPerPixel (2);
     scope.setVerticalZoomFactor (3.0f);
+    scope.setColour (gin::TriggeredScope::lineColourId, findColour (gin::PluginLookAndFeel::grey45ColourId));
+    scope.setColour (gin::TriggeredScope::traceColourId + 0, findColour (gin::PluginLookAndFeel::accentColourId));
+    scope.setColour (gin::TriggeredScope::envelopeColourId + 0, juce::Colours::transparentBlack);
+    scope.setColour (gin::TriggeredScope::traceColourId + 1, findColour (gin::PluginLookAndFeel::accentColourId));
+    scope.setColour (gin::TriggeredScope::envelopeColourId + 1, juce::Colours::transparentBlack);
 }
 
 VocAudioProcessorEditor::~VocAudioProcessorEditor()
@@ -45,16 +48,14 @@ VocAudioProcessorEditor::~VocAudioProcessorEditor()
 //==============================================================================
 void VocAudioProcessorEditor::paint (Graphics& g)
 {
-    GinAudioProcessorEditor::paint (g);
-        
-    g.drawImageAt (logo, getWidth() / 2 - logo.getWidth() / 2, 0);
+    gin::ProcessorEditor::paint (g);
 }
 
 void VocAudioProcessorEditor::resized()
 {
     using AP = VocAudioProcessor;
     
-    GinAudioProcessorEditor::resized();
+    gin::ProcessorEditor::resized();
     
     componentForId (AP::paramTenseness)->setBounds (getGridArea (0, 0));
     componentForId (AP::paramSmoothing)->setBounds (getGridArea (1, 0));

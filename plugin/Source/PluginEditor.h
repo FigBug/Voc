@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class VocAudioProcessorEditor  : public gin::GinAudioProcessorEditor
+class VocAudioProcessorEditor  : public gin::ProcessorEditor
 {
 public:
     VocAudioProcessorEditor (VocAudioProcessor&);
@@ -29,7 +29,6 @@ public:
     VocAudioProcessor& proc;
     
     gin::TriggeredScope scope {proc.fifo};
-    Image logo;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VocAudioProcessorEditor)
 };
