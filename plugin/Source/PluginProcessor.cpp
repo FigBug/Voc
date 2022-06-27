@@ -12,8 +12,6 @@
 #include "PluginEditor.h"
 #include <time.h>
 
-using namespace gin;
-
 const char* VocAudioProcessor::paramTenseness               = "tenseness";
 const char* VocAudioProcessor::paramConstrictionPosition    = "constrictionP";
 const char* VocAudioProcessor::paramConstrictionAmount      = "constrictionA";
@@ -27,17 +25,17 @@ const char* VocAudioProcessor::paramSustain                 = "sustain";
 const char* VocAudioProcessor::paramRelease                 = "release";
 
 //==============================================================================
-String percentTextFunction (const Parameter& p, float v)
+juce::String percentTextFunction (const gin::Parameter& p, float v)
 {
-    return String::formatted("%.0f%%", v / p.getUserRangeEnd() * 100);
+    return juce::String::formatted ("%.0f%%", v / p.getUserRangeEnd() * 100);
 }
 
-String glideTextFunction (const Parameter&, float v)
+juce::String glideTextFunction (const gin::Parameter&, float v)
 {
-    return String::formatted("%.2f", v);
+    return juce::String::formatted ("%.2f", v);
 }
 
-String onOffTextFunction (const Parameter&, float v)
+juce::String onOffTextFunction (const gin::Parameter&, float v)
 {
     return v > 0.0f ? "On" : "Off";
 }
@@ -85,9 +83,9 @@ void VocAudioProcessor::releaseResources()
 {
 }
 
-void VocAudioProcessor::runUntil (int& done, AudioSampleBuffer& buffer, int pos)
+void VocAudioProcessor::runUntil (int& done, juce::AudioSampleBuffer& buffer, int pos)
 {
-    int todo = jmin (pos, buffer.getNumSamples()) - done;
+    int todo = std::min (pos, buffer.getNumSamples()) - done;
     
     if (todo > 0)
     {
@@ -100,8 +98,10 @@ void VocAudioProcessor::runUntil (int& done, AudioSampleBuffer& buffer, int pos)
     }
 }
 
-void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midi)
+void VocAudioProcessor::processBlock (juce::AudioSampleBuffer& buffer, juce::MidiBuffer& midi)
 {
+	buffer.clear();
+	
     if (parameterValue (paramGlide) != lastGlide)
     {
         lastGlide = parameterValue (paramGlide);
@@ -122,7 +122,7 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
 
     const int playingNote = noteQueue.size() > 0 ? noteQueue.getLast() : -1;
     if (playingNote != -1)
-        voc_note_on (voc, jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
+        voc_note_on (voc, juce::jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
     
     int done = 0;
     runUntil (done, buffer, 0);
@@ -164,7 +164,7 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
                 else
                     noteSmoothed.setTargetValue (curNote / 127.0f);
                 
-                voc_note_on (voc, jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
+                voc_note_on (voc, juce::jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
                 if (lastNote == -1)
                     adsr.noteOn();
             }
@@ -176,7 +176,7 @@ void VocAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& mid
         {
             bend = (msg.getPitchWheelValue() / float (0x3FFF)) * 4 - 2;
             if (curNote != -1)
-                voc_note_on (voc, jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
+                voc_note_on (voc, juce::jlimit (0.0f, 127.0f, noteSmoothed.getCurrentValue() * 127.0f + bend), velocity);
         }
 
         if (curNote == -1 && adsr.getOutput() == 0.0f)
@@ -200,14 +200,14 @@ bool VocAudioProcessor::hasEditor() const
     return true;
 }
 
-AudioProcessorEditor* VocAudioProcessor::createEditor()
+juce::AudioProcessorEditor* VocAudioProcessor::createEditor()
 {
     return new VocAudioProcessorEditor (*this);
 }
 
 //==============================================================================
 // This creates new instances of the plugin..
-AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new VocAudioProcessor();
 }

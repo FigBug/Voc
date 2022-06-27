@@ -12,8 +12,6 @@
 #include "PluginEditor.h"
 #include "BinaryData.h"
 
-using namespace gin;
-
 //==============================================================================
 VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
     : gin::ProcessorEditor (p), proc (p)
@@ -22,7 +20,7 @@ VocAudioProcessorEditor::VocAudioProcessorEditor (VocAudioProcessor& p)
     
     for (auto pp : p.getPluginParameters())
     {
-        auto c = pp->isOnOff() ? (ParamComponent*)new Switch (pp) : (ParamComponent*)new Knob (pp);
+        auto c = pp->isOnOff() ? (gin::ParamComponent*)new gin::Switch (pp) : (gin::ParamComponent*)new gin::Knob (pp);
         
         addAndMakeVisible (c);
         controls.add (c);
@@ -46,7 +44,7 @@ VocAudioProcessorEditor::~VocAudioProcessorEditor()
 }
 
 //==============================================================================
-void VocAudioProcessorEditor::paint (Graphics& g)
+void VocAudioProcessorEditor::paint (juce::Graphics& g)
 {
     gin::ProcessorEditor::paint (g);
 }
