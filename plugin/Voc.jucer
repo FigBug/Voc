@@ -47,8 +47,7 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" extraCompilerFlags="-Wunused-value"
-               vstLegacyFolder="../modules/plugin_sdk/vstsdk2.4" hardenedRuntime="1"
-               extraDefs="JUCE_COREGRAPHICS_DRAW_ASYNC=1">
+               vstLegacyFolder="../modules/plugin_sdk/vstsdk2.4" extraDefs="JUCE_COREGRAPHICS_DRAW_ASYNC=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Voc" headerPath="../../../3rdparty/voc&#10;"
                        osxCompatibility="10.9 SDK" enablePluginBinaryCopyStep="1" recommendedWarnings="LLVM"
