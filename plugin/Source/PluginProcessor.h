@@ -13,7 +13,7 @@
 #include <JuceHeader.h>
 
 extern "C" {
-#include "voc.h"
+#include "voc/voc.h"
 }
 
 //==============================================================================
