@@ -31,8 +31,16 @@ juce::String onOffTextFunction (const gin::Parameter&, float v)
 }
 
 //==============================================================================
+static gin::ProcessorOptions createProcessorOptions()
+{
+    gin::ProcessorOptions opts;
+    opts.withAdditionalCredits ({"Neil Thapen"});
+    opts.hasMidiLearn = true;
+    return opts;
+}
+
 VocAudioProcessor::VocAudioProcessor()
-    : gin::Processor (false, gin::ProcessorOptions().withAdditionalCredits({"Neil Thapen"}))
+    : gin::Processor (false, createProcessorOptions())
 {
     addExtParam (paramTenseness,            "Tenseness",             "Tenseness",   "", {0.0f,  1.0f, 0.0f, 1.0f},  0.0f, 0.0f, percentTextFunction);
     addExtParam (paramConstrictionPosition, "Constriction Position", "Const Pos" ,  "", {0.0f,  1.0f, 0.0f, 1.0f},  0.0f, 0.0f, percentTextFunction);
@@ -93,8 +101,11 @@ void VocAudioProcessor::runUntil (int& done, juce::AudioSampleBuffer& buffer, in
 
 void VocAudioProcessor::processBlock (juce::AudioSampleBuffer& buffer, juce::MidiBuffer& midi)
 {
+    if (midiLearn)
+        midiLearn->processBlock (midi, buffer.getNumSamples());
+
 	buffer.clear();
-	
+
     if (parameterValue (paramGlide) != lastGlide)
     {
         lastGlide = parameterValue (paramGlide);
