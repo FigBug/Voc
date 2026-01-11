@@ -33,10 +33,9 @@ juce::String onOffTextFunction (const gin::Parameter&, float v)
 //==============================================================================
 static gin::ProcessorOptions createProcessorOptions()
 {
-    gin::ProcessorOptions opts;
-    opts.withAdditionalCredits ({"Neil Thapen"});
-    opts.hasMidiLearn = true;
-    return opts;
+    return gin::ProcessorOptions()
+        .withAdditionalCredits ({"Neil Thapen"})
+        .withMidiLearn();
 }
 
 VocAudioProcessor::VocAudioProcessor()
