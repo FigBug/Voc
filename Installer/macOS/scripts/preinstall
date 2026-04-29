@@ -1,0 +1,6 @@
+#!/bin/sh
+rm -Rf "/Library/Audio/Plug-Ins/VST/Voc.vst"
+rm -Rf "/Library/Audio/Plug-Ins/VST3/Voc.vst3"
+rm -Rf "/Library/Audio/Plug-Ins/Components/Voc.component"
+rm -Rf "/Library/Audio/Plug-Ins/CLAP/Voc.clap"
+exit 0
