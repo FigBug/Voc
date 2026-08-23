@@ -16,19 +16,31 @@ const char* VocAudioProcessor::paramSustain                 = "sustain";
 const char* VocAudioProcessor::paramRelease                 = "release";
 
 //==============================================================================
-juce::String percentTextFunction (const gin::Parameter& p, float v)
+std::variant<float, juce::String> percentTextFunction (const gin::Parameter& p, const std::variant<float, juce::String>& in)
 {
-    return juce::String::formatted ("%.0f%%", v / p.getUserRangeEnd() * 100);
+    if (auto v = std::get_if<float> (&in))
+        return juce::String::formatted ("%.0f%%", *v / p.getUserRangeEnd() * 100);
+
+    return std::get<juce::String> (in).getFloatValue() / 100.0f * p.getUserRangeEnd();
 }
 
-juce::String glideTextFunction (const gin::Parameter&, float v)
+std::variant<float, juce::String> glideTextFunction (const gin::Parameter&, const std::variant<float, juce::String>& in)
 {
-    return juce::String::formatted ("%.2f", v);
+    if (auto v = std::get_if<float> (&in))
+        return juce::String::formatted ("%.2f", *v);
+
+    return std::get<juce::String> (in).getFloatValue();
 }
 
-juce::String onOffTextFunction (const gin::Parameter&, float v)
+std::variant<float, juce::String> onOffTextFunction (const gin::Parameter&, const std::variant<float, juce::String>& in)
 {
-    return v > 0.0f ? "On" : "Off";
+    if (auto v = std::get_if<float> (&in))
+        return juce::String (*v > 0.0f ? "On" : "Off");
+
+    auto t = std::get<juce::String> (in).trim();
+    if (t.equalsIgnoreCase ("On"))  return 1.0f;
+    if (t.equalsIgnoreCase ("Off")) return 0.0f;
+    return t.getFloatValue();
 }
 
 //==============================================================================
